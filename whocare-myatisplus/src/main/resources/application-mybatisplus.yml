@@ -1,0 +1,5 @@
+mybatis-plus:
+  configuration:
+    default-fetch-size: 30
+  mapper-locations:
+    - classpath*:mybatis/**/*Mapper.xml

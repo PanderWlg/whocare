@@ -1,0 +1,21 @@
+
+spring:
+  profiles:
+    active:
+      - core
+      - mybatisplus
+  datasource:
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      #url: jdbc:mysql://49.4.1.42:3306/pmis-dev?useUnicode=true&characterEncoding=utf8
+      #username: pmis-dev
+      #password: pmisDev1028
+      url: jdbc:mysql://localhost:3306/pmis-dev?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: 1qaz2wsx
+      db-type: mysql
+  webflux:
+    date-format: yyyy-MM-dd HH:mm:ss
+logging:
+  level:
+    web: info

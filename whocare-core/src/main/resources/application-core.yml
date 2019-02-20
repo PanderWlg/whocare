@@ -1,0 +1,36 @@
+server:
+  compression:
+    enabled: true
+  error:
+    whitelabel:
+      enabled: false
+spring:
+  jackson:
+    date-format: java.text.SimpleDateFormat
+    time-zone: GMT+0800
+    default-property-inclusion: non_null
+    serialization:
+      INDENT_OUTPUT: true
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    parser:
+      ALLOW_COMMENTS: true
+      ALLOW_UNQUOTED_FIELD_NAMES: true
+      ALLOW_SINGLE_QUOTES: true
+  aop:
+    auto: true
+    proxy-target-class: true
+  task:
+    execution:
+      pool:
+        core-size: 10
+        keep-alive: 10s
+        queue-capacity: 100
+        max-size: 12
+    scheduling:
+      pool:
+        size: 2
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
