@@ -11,10 +11,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import ${package.Entity}.${entity};
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ${package.ServiceImpl}.${table.serviceImplName};
@@ -29,7 +29,7 @@ import ${superControllerClassPackage};
 
 /**
  * <p>
- * ${table.comment!}前端控制器
+ * ${table.comment!} 前端控制器
  * </p>
  *
  * @author ${author}
@@ -57,19 +57,24 @@ public class ${table.controllerName} {
  private ${table.serviceImplName} ${serviceName};
 
     /**
-    * ${table.comment!}表格
+    * 出行列表表格
     *
     * @param page
     * @return
     */
     @RequestMapping("/table")
-    Map<String, Object> table(@RequestBody Page<${entity}> page, ${entity} ${modelName}) {
+    Map<String, Object> table(Page<${entity}> page, ${entity} ${modelName}) {
         LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.lambdaQuery(${modelName});
-        return ${serviceName}.getTable(page,queryWrapper);
+        ${serviceName}.page(page, queryWrapper);
+          Map<String, Object> table = new HashMap<>(3);
+          table.put("total", page.getTotal());
+          table.put("status", 200);
+          table.put("records", page.getRecords());
+          return table;
       }
 
       /**
-      * ${table.comment!}列表
+      * 出行列表
       *
       * @param page
       * @return
@@ -81,7 +86,8 @@ public class ${table.controllerName} {
        }
 
     /**
-    * 创建/编辑${table.comment!}
+    * 创建/编辑出行
+    *
     * @param ${modelName}
     * @return
     */
@@ -92,7 +98,7 @@ public class ${table.controllerName} {
         }
 
     /**
-    * 获取${table.comment!}详情
+    * 获取出行详情
     *
     * @param id
     * @return
@@ -103,7 +109,8 @@ public class ${table.controllerName} {
      }
 
      /**
-     * 删除${table.comment!}
+     * 删除出行
+     *
      * @param id
      * @return
      */

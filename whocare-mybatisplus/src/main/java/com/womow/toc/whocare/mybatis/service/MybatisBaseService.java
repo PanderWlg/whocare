@@ -1,12 +1,10 @@
 package com.womow.toc.whocare.mybatis.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +30,7 @@ public interface MybatisBaseService<T> extends IService<T> {
      * <p>
      * 查询分页列表
      * </p>
-     *
-     * @param page 分页模型{@link com.baomidou.mybatisplus.extension.plugins.pagination.Page}
+     * @param page         分页模型{@link com.baomidou.mybatisplus.extension.plugins.pagination.Page}
      * @see Wrappers#emptyWrapper()
      */
     default List<Map<String, Object>> listMaps(Page<T> page) {
@@ -59,7 +56,7 @@ public interface MybatisBaseService<T> extends IService<T> {
      * 查询分页
      * </p>
      *
-     * @param page 分页模型{@link com.baomidou.mybatisplus.extension.plugins.pagination.Page}
+     * @param page         分页模型{@link com.baomidou.mybatisplus.extension.plugins.pagination.Page}
      * @see Wrappers#emptyWrapper()
      */
     default List<T> list(Page<T> page) {
@@ -76,21 +73,4 @@ public interface MybatisBaseService<T> extends IService<T> {
         }
         return page;
     }
-
-    /**
-     * layuitable
-     *
-     * @param page
-     * @param wrapper
-     * @return
-     */
-    default Map<String, Object> getTable(IPage<T> page, Wrapper<T> wrapper) {
-        this.page(page, wrapper);
-        Map<String, Object> table = new HashMap<>(3);
-        table.put("total", page.getTotal());
-        table.put("status", 200);
-        table.put("records", page.getRecords());
-        return table;
-    }
-
 }
