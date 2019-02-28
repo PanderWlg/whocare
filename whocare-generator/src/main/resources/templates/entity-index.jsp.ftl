@@ -42,6 +42,8 @@
         table.render({
             title: "${table.comment!}",
             elem: '#${tableId}',
+            method:'post',
+            contentType:'application/json',
             toolbar: '#tableToolbar',
             defaultToolbar: ['filter'],
             url: '${tableUrl?remove_beginning('/')}',
@@ -137,7 +139,20 @@
 
             }
         });
+        table.on('sort(${tableId})', function(obj){
+            var type=obj.type;
+            var param={};
+            if('desc'==type){
+                param.descs=[obj.field];
+            }else if('asc'==type) {
+                param.ascs=[obj.field];
+            }
+            table.reload('${tableId}', {
+                initSort: obj,
+                where: param
 
+            });
+        });
     });
 </script>
 </body>
