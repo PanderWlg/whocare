@@ -6,7 +6,7 @@
         <artifactId>whocare-parent</artifactId>
         <groupId>com.womow.toc.whocare</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../whocare-parent/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>whocare-example</artifactId>
@@ -22,13 +22,14 @@
         </dependency>
         <dependency>
             <groupId>com.womow.toc.whocare</groupId>
-            <artifactId>whocare-myatisplus</artifactId>
+            <artifactId>whocare-mybatisplus</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.womow.toc.whocare</groupId>
             <artifactId>whocare-generator</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>

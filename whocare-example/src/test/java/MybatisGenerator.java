@@ -1,16 +1,18 @@
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.womow.toc.whocare.mybatis.mapper.MybatisBaseMapper;
 import com.womow.toc.whocare.mybatis.service.MybatisBaseServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,7 +45,7 @@ public class MybatisGenerator {
         gc.setBaseColumnList(true);
         gc.setServiceName(null);
         gc.setServiceImplName("%sService");
-        gc.setEntityName("%sDto");
+        gc.setEntityName("%s");
         //gc.setActiveRecord(true);
         mpg.setGlobalConfig(gc);
         // 数据源配置
@@ -88,6 +90,24 @@ public class MybatisGenerator {
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
+        String formTemplate="/templates/entity-form.jsp.ftl";
+        focList.add(new FileOutConfig(formTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名
+                return projectPath + "/whocare-example/src/main/webapp/WEB-INF/views/" + pc.getModuleName()
+                        + "/" + StringUtils.firstCharToLower(tableInfo.getEntityName()) + "-form.jsp";
+            }
+        });
+        String entitiIndexTemplate="/templates/entity-index.jsp.ftl";
+        focList.add(new FileOutConfig(entitiIndexTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名
+                return projectPath + "/whocare-example/src/main/webapp/WEB-INF/views/" + pc.getModuleName()
+                        + "/" + StringUtils.firstCharToLower(tableInfo.getEntityName()) + "-index.jsp";
+            }
+        });
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         // 配置模板
@@ -104,7 +124,7 @@ public class MybatisGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel)
-                .setColumnNaming(NamingStrategy.nochange)
+                .setColumnNaming(NamingStrategy.no_change)
                 .setEntityTableFieldAnnotationEnable(true)
                 //.setSuperMapperClass(MybatisBaseMapper.class.getName())
                 .setSuperServiceImplClass(MybatisBaseServiceImpl.class.getName())
@@ -112,8 +132,9 @@ public class MybatisGenerator {
                 .setEntityLombokModel(false)
                 .setRestControllerStyle(true)
                 .setControllerMappingHyphenStyle(true)
-                .setInclude("t_pmis_chuxing", "t_pmis_bx_cl")
+                .setInclude("t_pmis_chuxing","t_pmis_bx_cl")
                 .setControllerMappingHyphenStyle(true)
+                .setTableFillList(Arrays.asList(new TableFill("create_time_", FieldFill.INSERT),new TableFill("status_",FieldFill.INSERT)))
                 .setTablePrefix("t_pmis_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
