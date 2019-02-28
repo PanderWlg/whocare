@@ -1,5 +1,6 @@
 package com.womow.toc.whocare;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.womow.toc.whocare.helper.Helper4Date;
 import org.apache.commons.lang3.StringUtils;
@@ -18,13 +19,18 @@ public class DemoMeataObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        final Object createTime = getFieldValByName("create_time_", metaObject);
-        final Object status = getFieldValByName("status_", metaObject);
-        if (createTime == null || StringUtils.isBlank(createTime.toString())) {
-            setInsertFieldValByName("create_time_", Helper4Date.getCurrentTime(), metaObject);
+        String createTime = Helper4Date.getCurrentTime();
+        if (this.isFill("create_time_", createTime, metaObject, FieldFill.INSERT)) {
+            final Object moCreateTime = getFieldValByName("create_time_", metaObject);
+            if (moCreateTime == null || StringUtils.isBlank(moCreateTime.toString())) {
+                setInsertFieldValByName("create_time_",createTime, metaObject);
+            }
         }
-        if (status == null || StringUtils.isBlank(status.toString())) {
-            setInsertFieldValByName("status_", "1", metaObject);
+        if (this.isFill("status_", "1", metaObject, FieldFill.INSERT)) {
+            final Object status = getFieldValByName("status_", metaObject);
+            if (status == null || StringUtils.isBlank(status.toString())) {
+                setInsertFieldValByName("status_", "1", metaObject);
+            }
         }
 
     }
