@@ -1,0 +1,96 @@
+{
+  "properties": [
+    {
+      "name": "shiro.sessionManager.sessionIdCookieEnabled",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable sessionIdCookie.",
+      "defaultValue": true
+    },
+    {
+      "name": "shiro.userNativeSessionManager",
+      "type": "java.lang.Boolean",
+      "description": "Whether to userNativeSessionManager.",
+      "defaultValue": false
+    },
+    {
+      "name": "shiro.sessionManager.cookie.name",
+      "type": "java.lang.String",
+      "description": "session cookie name.",
+      "defaultValue": "JSESSIONID"
+    },
+    {
+      "name": "shiro.sessionManager.cookie.maxAge",
+      "type": "java.lang.Integer",
+      "description": "session max-age.",
+      "defaultValue": -1
+    },
+    {
+      "name": "shiro.sessionManager.cookie.domain",
+      "type": "java.lang.String",
+      "description": "session cookie domain."
+    },
+    {
+      "name": "shiro.sessionManager.cookie.path",
+      "type": "java.lang.String",
+      "description": "session cookie path."
+    },
+    {
+      "name": "shiro.sessionManager.cookie.secure",
+      "type": "java.lang.Boolean",
+      "description": "Whether to enable session cookie secure.",
+      "defaultValue": false
+    },
+    {
+      "name": "shiro.sessionManager.deleteInvalidSessions",
+      "type": "java.lang.Boolean",
+      "description": "Whether to delete invalid sessions.",
+      "defaultValue": false
+    },
+
+    {
+      "name": "shiro.rememberMeManager.cookie.name",
+      "type": "java.lang.String",
+      "description": "rememberMe cookie name.",
+      "defaultValue": true
+    },
+    {
+      "name": "shiro.rememberMeManager.cookie.maxAge",
+      "type": "java.lang.Integer",
+      "description": "rememberMe cookie max-age."
+    },
+    {
+      "name": "shiro.rememberMeManager.cookie.domain",
+      "type": "java.lang.String",
+      "description": "rememberMe cookie domain."
+    },
+    {
+      "name": "shiro.rememberMeManager.cookie.path",
+      "type": "java.lang.String",
+      "description": "rememberMe cookie domain."
+    },
+    {
+      "name": "shiro.rememberMeManager.cookie.secure",
+      "type": "java.lang.Boolean",
+      "description": "rememberMe cookie secure.",
+      "defaultValue": false
+    },
+    {
+      "name": "shiro.loginUrl",
+      "type": "java.lang.String",
+      "description": "login-url.",
+      "defaultValue": "/login.jsp"
+    },
+    {
+      "name": "shiro.successUrl",
+      "type": "java.lang.String",
+      "description": "login success url.",
+      "defaultValue": "/"
+    },
+    {
+      "name": "shiro.unauthorizedUrl",
+      "type": "java.lang.String",
+      "description": "unauthorized url."
+    }
+  ],
+  "hints": []
+}
