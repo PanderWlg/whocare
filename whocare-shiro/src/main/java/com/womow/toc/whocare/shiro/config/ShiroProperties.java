@@ -4,6 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
+/**
+ * @author changqingshun
+ */
 @ConfigurationProperties(prefix = "shiro")
 public class ShiroProperties {
     public static class InterceptUrl {
@@ -34,7 +37,7 @@ public class ShiroProperties {
     }
 
     /**
-     * 请求地址
+     * 请求拦截地址
      */
     private List<InterceptUrl> interceptUrls;
     /**
