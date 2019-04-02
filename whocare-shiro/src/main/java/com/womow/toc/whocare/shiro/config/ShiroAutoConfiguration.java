@@ -41,104 +41,106 @@ public class ShiroAutoConfiguration {
     @Import({ShiroBeanConfiguration.class, ShiroWebFilterConfiguration.class})
     @ConditionalOnWebApplication
     public static class ShiroWebAutoConfiguration extends AbstractShiroWebConfiguration {
-
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SubjectDAO subjectDAO() {
             return super.subjectDAO();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SessionStorageEvaluator sessionStorageEvaluator() {
             return super.sessionStorageEvaluator();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SessionFactory sessionFactory() {
             return super.sessionFactory();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SessionDAO sessionDAO() {
             return super.sessionDAO();
         }
 
+        @ConditionalOnMissingBean(name = "sessionCookieTemplate")
         @Bean(name = "sessionCookieTemplate")
-        @ConditionalOnMissingBean
         @Override
         protected Cookie sessionCookieTemplate() {
             return super.sessionCookieTemplate();
         }
 
+        @ConditionalOnMissingBean(name = "rememberMeCookieTemplate")
         @Bean(name = "rememberMeCookieTemplate")
-        @ConditionalOnMissingBean
         @Override
         protected Cookie rememberMeCookieTemplate() {
             return super.rememberMeCookieTemplate();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected RememberMeManager rememberMeManager() {
             return super.rememberMeManager();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SubjectFactory subjectFactory() {
             return super.subjectFactory();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected Authorizer authorizer() {
             return super.authorizer();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected AuthenticationStrategy authenticationStrategy() {
             return super.authenticationStrategy();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected Authenticator authenticator() {
             return super.authenticator();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SessionManager sessionManager() {
             return super.sessionManager();
         }
 
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         @Override
         protected SessionsSecurityManager securityManager(List<Realm> realms) {
             return super.securityManager(realms);
         }
 
         @Bean
-        @ConditionalOnProperty(prefix = "shiro", name = "interceptUrls")
         protected ShiroFilterChainDefinition shiroFilterChainDefinition(ShiroProperties shiroProperties) {
-            DefaultShiroFilterChainDefinition shiroFilterChainDefinition = new DefaultShiroFilterChainDefinition();
-            shiroProperties.getInterceptUrls().forEach(one -> shiroFilterChainDefinition.addPathDefinition(one.getPattern(), one.getAccess()));
-            return shiroFilterChainDefinition;
+            if (null != shiroProperties.getInterceptUrls() && !shiroProperties.getInterceptUrls().isEmpty()) {
+                DefaultShiroFilterChainDefinition shiroFilterChainDefinition = new DefaultShiroFilterChainDefinition();
+                shiroProperties.getInterceptUrls().forEach(one -> shiroFilterChainDefinition.addPathDefinition(one.getPattern(), one.getAccess()));
+                return shiroFilterChainDefinition;
+            }
+            return super.shiroFilterChainDefinition();
+
 
         }
 
@@ -149,7 +151,7 @@ public class ShiroAutoConfiguration {
      */
     @Configuration
     @ConditionalOnNotWebApplication
-    public static class ShiroNoWetAutoConfiguration extends AbstractShiroConfiguration {
+    public static class ShiroNoWebAutoConfiguration extends AbstractShiroConfiguration {
         @Bean
         @ConditionalOnMissingBean
         @Override
