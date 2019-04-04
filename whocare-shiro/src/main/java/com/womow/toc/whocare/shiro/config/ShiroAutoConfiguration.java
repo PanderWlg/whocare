@@ -150,6 +150,7 @@ public class ShiroAutoConfiguration {
      * 非Web应用
      */
     @Configuration
+    @Import({ShiroBeanConfiguration.class})
     @ConditionalOnNotWebApplication
     public static class ShiroNoWebAutoConfiguration extends AbstractShiroConfiguration {
         @Bean
@@ -160,7 +161,7 @@ public class ShiroAutoConfiguration {
         }
 
         @Bean
-        @ConditionalOnMissingBean
+        @ConditionalOnMissingBean(name ="sessionManager" )
         @Override
         protected SessionManager sessionManager() {
             return super.sessionManager();
@@ -202,7 +203,7 @@ public class ShiroAutoConfiguration {
         }
 
         @Bean
-        @ConditionalOnMissingBean
+        @ConditionalOnMissingBean(name = "authorizer")
         @Override
         protected Authorizer authorizer() {
             return super.authorizer();
@@ -216,7 +217,7 @@ public class ShiroAutoConfiguration {
         }
 
         @Bean
-        @ConditionalOnMissingBean
+        @ConditionalOnMissingBean(name = "authenticator")
         @Override
         protected Authenticator authenticator() {
             return super.authenticator();
