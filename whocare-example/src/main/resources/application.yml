@@ -1,8 +1,10 @@
 spring:
+  #main.allow-bean-definition-overriding: true
   profiles:
     active:
       - core
       - mybatisplus
+      #- kafka
   datasource:
     druid:
       #driver-class-name: com.mysql.jdbc.Driver
@@ -15,6 +17,28 @@ spring:
       db-type: mysql
   webflux:
     date-format: yyyy-MM-dd HH:mm:ss
+shiro:
+  enabled: true
+  sessionManager:
+    cookie:
+      secure: true
+  rememberMeManager:
+    cookie:
+      secure: true
+  interceptUrls:
+    - pattern: /**/table/**
+      access: anon
+    - pattern: /webjars/**
+      access: anon
+    - pattern: /**
+      access: authc
+
 logging:
   level:
+    errorLog: error
     web: info
+    org.apache.shiro: debug
+    com:
+      womow:
+        toc:
+          whocare: debug

@@ -7,14 +7,14 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.womow.toc.whocare.generator.AutoGeneratorConfigBuilder;
+import com.womow.toc.whocare.generator.FreemarkerTemplateEngineV2;
 import com.womow.toc.whocare.mybatis.service.MybatisBaseServiceImpl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MybatisGenerator {
     public static String scanner(String tip) {
@@ -32,6 +32,16 @@ public class MybatisGenerator {
     }
 
     public static void main(String[] args) {
+
+        //  project: whocare-example
+        //  datasource:
+        //  module
+        //  parent:
+        //  entity:
+        //  service:
+        //  serviceImpl:
+        //  controller:
+
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
@@ -62,9 +72,9 @@ public class MybatisGenerator {
         pc.setModuleName("clbx");
         pc.setParent("com.womow.toc.whocare");
         pc.setEntity("model");
-        pc.setService("");
         pc.setController("controller");
         pc.setServiceImpl("service");
+        pc.setXml(null);
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -74,6 +84,7 @@ public class MybatisGenerator {
                 // to do nothing
             }
         };
+        cfg.setFileCreate((configBuilder, fileType, filePath) -> !(FileType.SERVICE.equals(fileType) || FileType.XML.equals(fileType)));
         // 如果模板引擎是 freemarker
         String templatePath = "/templates/mapper.xml.ftl";
         // 如果模板引擎是 velocity
@@ -90,7 +101,7 @@ public class MybatisGenerator {
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
-        String formTemplate="/templates/entity-form.jsp.ftl";
+        String formTemplate = "/templates/entity-form.jsp.ftl";
         focList.add(new FileOutConfig(formTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -99,7 +110,7 @@ public class MybatisGenerator {
                         + "/" + StringUtils.firstCharToLower(tableInfo.getEntityName()) + "-form.jsp";
             }
         });
-        String entitiIndexTemplate="/templates/entity-index.jsp.ftl";
+        String entitiIndexTemplate = "/templates/entity-index.jsp.ftl";
         focList.add(new FileOutConfig(entitiIndexTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -117,8 +128,6 @@ public class MybatisGenerator {
         // templateConfig.setService();
         // templateConfig.setController();
         //不生成service
-        templateConfig.setService(null);
-        templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
 
         // 策略配置
@@ -132,12 +141,17 @@ public class MybatisGenerator {
                 .setEntityLombokModel(false)
                 .setRestControllerStyle(true)
                 .setControllerMappingHyphenStyle(true)
-                .setInclude("t_pmis_chuxing","t_pmis_bx_cl")
+                .setInclude("t_pmis_chuxing", "t_pmis_bx_cl")
                 .setControllerMappingHyphenStyle(true)
-                .setTableFillList(Arrays.asList(new TableFill("create_time_", FieldFill.INSERT),new TableFill("status_",FieldFill.INSERT)))
+                .setTableFillList(Arrays.asList(new TableFill("create_time_", FieldFill.INSERT), new TableFill("status_", FieldFill.INSERT)))
                 .setTablePrefix("t_pmis_");
         mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        AutoGeneratorConfigBuilder configBuilder = new AutoGeneratorConfigBuilder(pc, dsc, strategy, templateConfig, gc);
+        Map<String, String> entityMapping = new HashMap<>();
+        entityMapping.put("t_pmis_bx_cl", "ClBx");
+        configBuilder.setTableEntityNameMappings(entityMapping);
+        mpg.setTemplateEngine(new FreemarkerTemplateEngineV2());
+        mpg.setConfig(configBuilder);
         mpg.execute();
     }
 
