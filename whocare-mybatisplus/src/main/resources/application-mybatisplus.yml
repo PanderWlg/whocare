@@ -1,8 +1,15 @@
 mybatis-plus:
   configuration:
     default-fetch-size: 30
+    cache-enabled: true
+    default-executor-type: reuse
+    multiple-result-sets-enabled: true
   mapper-locations:
     - classpath*:mybatis/**/*Mapper.xml
   global-config:
     db-config:
       id-type: uuid
+      field-strategy: not_empty
+      logic-not-delete-value: 1
+      logic-delete-value: 0
+      db-type: mysql
